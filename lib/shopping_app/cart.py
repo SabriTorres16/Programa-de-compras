@@ -1,5 +1,6 @@
 class Cart:
     from item_manager import show_items
+    from ownable import set_owner
 
     def __init__(self, owner):
         self.set_owner(owner)
@@ -19,7 +20,14 @@ class Cart:
 
     def check_out(self):
         if self.owner.wallet.balance < self.total_amount():
-            pass    # check_outメソッドをコーディングする際はpassは削除してください。
+            print("Saldo insuficiente. Pago fallido.")
+        else:
+            for item in self.items:
+                item.owner.wallet.balance += item.price
+                self.owner.wallet.balance -= item.price
+                item.owner=self.owner 
+            self.items = []    
+        # check_outメソッドをコーディングする際はpassは削除してください。
         # 要件
         #   - カートの中身（Cart#items）のすべてのアイテムの購入金額が、カートのオーナーのウォレットからアイテムのオーナーのウォレットに移されること。
         #   - カートの中身（Cart#items）のすべてのアイテムのオーナー権限が、カートのオーナーに移されること。

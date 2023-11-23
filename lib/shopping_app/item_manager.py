@@ -21,8 +21,17 @@ def pick_items(self, number, quantity):   # numberと対応した自身の所有
 def show_items(self):   # 自身の所有するItemインスタンスの在庫状況を、["番号", "商品名", "金額", "数量"]という列でテーブル形式にして出力します。
     table_data = []
     for stock in _stock(self):
-        table_data.append([stock['number'], stock['label']['name'], stock['label']['price'], len(stock['items'])])
-    print(tabulate(table_data, headers=["番号", "商品名", "金額", "数量"], tablefmt="grid"))    # tabulateモジュールを使ってテーブル形式で結果を出力
+        table_data.append(
+            [stock['number'],
+             stock['label']['name'],
+             stock['label']['price'],
+             len(stock['items'])]
+             )
+    print(tabulate
+    (table_data,
+     headers=["Number", "Product Name", "Price", "Quantity"],
+      tablefmt="grid")
+      )    # tabulateモジュールを使ってテーブル形式で結果を出力
 
 def _stock(self):   # 自身の所有するItemインスタンスの在庫状況を返します。
     item_ls = self.items_list()
@@ -32,5 +41,10 @@ def _stock(self):   # 自身の所有するItemインスタンスの在庫状況
         group_list.append(list(group))
     stock = []
     for index, item in enumerate(group_list):
-        stock.append({"number": index, "label": {"name": item[0].name, "price": item[0].price}, "items": item})   # itemsの中には、分類されたItemインスタンスが格納されます。
+        stock.append(
+            {"number": index,
+             "label": {"name": item[0].name,
+             "price": item[0].price},
+             "items": item}
+               )   # itemsの中には、分類されたItemインスタンスが格納されます。
     return stock
